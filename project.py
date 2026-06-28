@@ -2,6 +2,7 @@ import sys
 import os
 import json
 import yaml
+import xmltodict
 
 def load_data(file_path):
     if not os.path.exists(file_path):
@@ -28,6 +29,15 @@ def load_data(file_path):
                 return data
         except yaml.YAMLError as e:
             print(f"Error: Invalid YAML syntax in {file_path}:\n{e}")
+            sys.exit(1)
+    elif ext == '.xml':
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                data = xmltodict.parse(f.read())
+                print(f"Successfully read and verified {file_path}")
+                return data
+        except Exception as e:
+            print(f"Error: Invalid XML syntax in {file_path}:\n{e}")
             sys.exit(1)
     else:
         print(f"Error: Unsupported input format: {ext}")
