@@ -1,6 +1,7 @@
 import sys
 import os
 import json
+import yaml
 
 def load_data(file_path):
     if not os.path.exists(file_path):
@@ -18,6 +19,15 @@ def load_data(file_path):
                 return data
         except json.JSONDecodeError as e:
             print(f"Error: Invalid JSON syntax in {file_path}:\n{e}")
+            sys.exit(1)
+    elif ext in ['.yml', '.yaml']:
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                data = yaml.safe_load(f)
+                print(f"Successfully read and verified {file_path}")
+                return data
+        except yaml.YAMLError as e:
+            print(f"Error: Invalid YAML syntax in {file_path}:\n{e}")
             sys.exit(1)
     else:
         print(f"Error: Unsupported input format: {ext}")
