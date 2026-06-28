@@ -45,6 +45,14 @@ def save_data(file_path, data):
         except Exception as e:
             print(f"Error: Failed to write JSON to {file_path}:\n{e}")
             sys.exit(1)
+    elif ext in ['.yml', '.yaml']:
+        try:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                yaml.dump(data, f, default_flow_style=False, sort_keys=False)
+                print(f"Successfully saved data to {file_path}")
+        except Exception as e:
+            print(f"Error: Failed to write YAML to {file_path}:\n{e}")
+            sys.exit(1)
     else:
         print(f"Error: Unsupported output format: {ext}")
         sys.exit(1)
