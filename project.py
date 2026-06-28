@@ -63,6 +63,14 @@ def save_data(file_path, data):
         except Exception as e:
             print(f"Error: Failed to write YAML to {file_path}:\n{e}")
             sys.exit(1)
+    elif ext == '.xml':
+        try:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(xmltodict.unparse(data, pretty=True))
+                print(f"Successfully saved data to {file_path}")
+        except Exception as e:
+            print(f"Error: Failed to write XML to {file_path}:\n{e}")
+            sys.exit(1)
     else:
         print(f"Error: Unsupported output format: {ext}")
         sys.exit(1)
